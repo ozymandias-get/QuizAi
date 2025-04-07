@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tıp Fakültesi Çoktan Seçmeli Quiz AI - Umut Üstün</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container my-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-9 col-xl-8">
+                 <header class="text-center mb-4">
+                     <h1 class="main-title">
+                         <i class="bi bi-lightbulb-fill me-2 text-primary"></i> Tıp Fakültesi Quiz Oluşturucu
+                     </h1>
+                     <p class="lead text-muted">İstediğiniz ders ve konudan, seçtiğiniz türlerde 5 şıklı sorularla kendinizi test edin.</p>
+                 </header>
+
+                <div class="card shadow-sm form-card">
+                    <div class="card-body p-4 p-md-5">
+                        <form id="quiz-options-form">
+                            <div class="row g-4">
+                                <!-- API Anahtarı -->
+                                <div class="col-12">
+                                    <label for="apiKey" class="form-label"><i class="bi bi-key me-1"></i> Gemini API Anahtarı</label>
+                                    <input type="password" class="form-control" id="apiKey" name="apiKey" placeholder="API Anahtarınızı buraya yapıştırın" required value="{{ api_key_in_session }}">
+                                     <div class="form-text form-text-sm">
+                                        <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-decoration-none link-secondary">Anahtarınız yok mu?</a>
+                                     </div>
+                                </div>
+
+                                <!-- Ders ve Konu -->
+                                <div class="col-md-6">
+                                    <label for="ders" class="form-label"><i class="bi bi-book me-1"></i> Ders</label>
+                                    <input type="text" class="form-control" id="ders" name="ders" placeholder="Örn: Anatomi" required>
+                                </div>
+                                <div class="col-md-6">
+                                    <label for="konu" class="form-label"><i class="bi bi-bookmark me-1"></i> Konu</label>
+                                    <input type="text" class="form-control" id="konu" name="konu" placeholder="Örn: Üst Ekstremite Kemikleri" required>
+                                </div>
+
+                                <!-- Zorluk ve Soru Sayısı -->
+                                 <div class="col-md-6">
+                                    <label for="difficulty" class="form-label"><i class="bi bi-bar-chart-line me-1"></i> Zorluk Seviyesi</label>
+                                    <select class="form-select" id="difficulty" name="difficulty" required>
+                                        {% for level in available_difficulty_levels %}
+                                            <option value="{{ level }}" {% if level == 'Orta' %}selected{% endif %}>
+                                                {{ level }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                 <div class="col-md-6">
+                                    <label for="num_questions" class="form-label"><i class="bi bi-list-ol me-1"></i> Soru Sayısı</label>
+                                    <input type="number" class="form-control" id="num_questions" name="num_questions" min="1" max="10" value="5" required>
+                                </div>
+
+                                <!-- Soru Alt Tipleri Seçimi -->
+                                <div class="col-12">
+                                    <label class="form-label d-block mb-2"><i class="bi bi-check2-square me-1"></i> İstenen Soru Türleri (En az 1 tane seçin)</label>
+                                    <div class="question-subtypes-grid">
+                                        {% for subtype in available_question_subtypes %}
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="checkbox" name="question_subtypes" value="{{ subtype }}" id="subtype_{{ loop.index }}" {% if loop.index <= 4 %}checked{% endif %}>
+                                            <label class="form-check-label" for="subtype_{{ loop.index }}">{{ subtype }}</label>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                     <div id="subtype-error" class="text-danger mt-1 d-none" style="font-size: 0.8em;">Lütfen en az bir soru türü seçin.</div>
+                                </div>
+
+                                <!-- YENİ: Spesifik İstek Kutusu -->
+                                <div class="col-12">
+                                    <label for="specific_request" class="form-label">
+                                        <i class="bi bi-pencil-square me-1"></i> Spesifik İstek (Opsiyonel)
+                                    </label>
+                                    <textarea class="form-control" id="specific_request" name="specific_request" rows="2" placeholder="Örn: Özellikle kalsiyum metabolizmasıyla ilgili mekanizma soruları olsun, Fallot tetralojisi ile ilgili bir senaryo sorusu..."></textarea>
+                                    <div class="form-text form-text-sm">
+                                        Buraya yazacağınız özel istekler, seçtiğiniz soru türlerine ek olarak dikkate alınacaktır. Boş bırakabilirsiniz.
+                                    </div>
+                                </div>
+                                <!-- /YENİ -->
+
+                                <!-- Buton -->
+                                <div class="col-12 mt-4">
+                                    <button type="submit" class="btn btn-primary w-100 btn-lg submit-btn">
+                                        <span class="spinner-border spinner-border-sm d-none me-2" role="status" aria-hidden="true"></span>
+                                        <i class="bi bi-magic me-1"></i> Quiz Oluştur
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Hata Mesajı Alanı -->
+                <div id="error-message" class="alert alert-danger mt-4 d-none" role="alert"></div>
+
+                <!-- Quiz Alanı -->
+                <div id="quiz-area" class="mt-5">
+                    <!-- Quiz soruları ve cevap alanları buraya gelecek -->
+                </div>
+
+                 <!-- Sonuç Alanı -->
+                 <div id="results-area" class="mt-5 d-none text-center">
+                    <h2 class="results-title"><i class="bi bi-clipboard2-check-fill me-2 text-success"></i> Quiz Tamamlandı!</h2>
+                    <div id="score-display" class="alert alert-light score-box fs-4 fw-bold border my-4"></div>
+                    <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                         <button id="show-answers-btn" class="btn btn-outline-secondary"><i class="bi bi-eye-fill me-1"></i> Açıklamaları Göster/Gizle</button>
+                         <button id="restart-quiz-btn" class="btn btn-outline-primary"><i class="bi bi-arrow-clockwise me-1"></i> Yeni Quiz Oluştur</button>
+                    </div>
+                 </div>
+
+                 <footer class="text-center text-muted mt-5 pt-4 border-top">
+                    <small>Geliştiren: Umut Üstün</small>
+                 </footer>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,305 @@
+/* Genel Stil ve Tipografi */
+body {
+    background-color: #f8f9fa; /* Çok açık gri */
+    font-family: 'Inter', sans-serif; /* Google Font */
+    color: #343a40; /* Koyu gri metin */
+    line-height: 1.5; /* Okunabilirlik için satır yüksekliği */
+}
+
+.main-title {
+    font-weight: 600;
+    color: #212529; /* Siyaha yakın */
+}
+
+.lead {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: #6c757d; /* Gri metin */
+}
+
+/* Form Kartı */
+.form-card {
+    border: none;
+    border-radius: 0.75rem;
+    background-color: #ffffff;
+}
+
+.form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: #495057;
+}
+
+.form-control, .form-select {
+    border-radius: 0.375rem;
+    border: 1px solid #ced4da; /* Standart sınır */
+    padding: 0.6rem 0.9rem; /* Input padding */
+    font-size: 0.95rem; /* Biraz daha büyük font */
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out; /* Yumuşak geçiş */
+}
+.form-control:focus, .form-select:focus {
+    border-color: #86b7fe; /* Bootstrap focus rengi */
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Bootstrap focus gölgesi */
+    outline: 0; /* Varsayılan outline'ı kaldır */
+}
+/* Placeholder rengi */
+.form-control::placeholder {
+    color: #adb5bd;
+    opacity: 1;
+}
+
+
+.form-text-sm {
+    font-size: 0.8rem;
+    color: #6c757d;
+}
+
+/* Soru Alt Tipi Checkbox Grid */
+.question-subtypes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Duyarlı grid */
+    gap: 0.5rem 1rem;
+    padding: 1rem; /* Biraz iç boşluk */
+    background-color: #f8f9fa; /* Form arka planı ile aynı */
+    border-radius: 0.375rem;
+    border: 1px solid #e9ecef; /* Daha yumuşak sınır */
+}
+.question-subtypes-grid .form-check {
+    padding-left: 0; /* Varsayılan padding'i sıfırla */
+}
+.question-subtypes-grid .form-check-label {
+    font-size: 0.85rem;
+    font-weight: 400;
+    margin-left: 0.5rem; /* Checkbox ile label arası boşluk */
+    cursor: pointer;
+}
+.question-subtypes-grid .form-check-input {
+    border-color: #adb5bd;
+    margin-top: 0.1em; /* Dikey hizalama */
+    cursor: pointer;
+    float: left; /* Label'ın yanına almak için */
+    margin-left: 0; /* Sol boşluğu sıfırla */
+}
+.question-subtypes-grid .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+.question-subtypes-grid .form-check-input:focus {
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Focus efekti */
+}
+
+
+/* Gönder Butonu */
+.submit-btn {
+    padding: 0.75rem 1.5rem;
+    font-weight: 500;
+    font-size: 1.05rem;
+}
+
+/* Quiz Alanı */
+#quiz-area .question-card {
+    background-color: #ffffff;
+    border: 1px solid #e9ecef; /* Daha yumuşak sınır */
+    border-radius: 0.75rem;
+    margin-bottom: 2rem;
+    padding: 1.75rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.04);
+    position: relative;
+    overflow: hidden; /* Kenarlık için */
+}
+
+#quiz-area .question-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start; /* Badge yukarıda kalsın */
+    margin-bottom: 0.75rem;
+    gap: 1rem; /* Numara ve badge arası boşluk */
+}
+
+#quiz-area .question-number {
+    font-weight: 600;
+    color: #0d6efd; /* Ana renk */
+    font-size: 1.1rem;
+    flex-shrink: 0; /* Küçülmesin */
+}
+
+#quiz-area .question-type-badge {
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding: 0.25em 0.6em;
+    border-radius: 0.25rem;
+    background-color: #e9ecef;
+    color: #6c757d;
+    white-space: nowrap; /* Tek satırda kalsın */
+}
+
+
+#quiz-area .question-text {
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+    font-size: 1.05em;
+    line-height: 1.6;
+    color: #343a40;
+}
+
+/* Şıklar */
+#quiz-area .options-list {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0; /* Alt boşluğu kaldır */
+}
+
+#quiz-area .options-list .form-check {
+    margin-bottom: 0.8rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #e9ecef;
+    border-radius: 0.375rem;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+    cursor: pointer;
+    display: flex; /* Input ve label'ı hizala */
+    align-items: center;
+}
+#quiz-area .options-list .form-check:hover {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+}
+#quiz-area .options-list .form-check label {
+    cursor: pointer;
+    width: 100%;
+    font-size: 0.95rem;
+    margin-bottom: 0; /* Varsayılan margin'i kaldır */
+    margin-left: 0.75rem; /* Input ile label arası boşluk */
+}
+#quiz-area .options-list .form-check-input {
+    cursor: pointer;
+    margin-top: 0; /* Dikey hizalama için margin-top sıfırla */
+    flex-shrink: 0; /* Input küçülmesin */
+}
+
+/* Değerlendirme Sonrası Stiller */
+.question-card::before { /* Sol kenarlık efekti için */
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 6px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    border-top-left-radius: 0.75rem; /* Kenarlığın köşelerini yuvarlat */
+    border-bottom-left-radius: 0.75rem;
+}
+
+.question-card.correct::before {
+    background-color: #198754; /* Yeşil */
+}
+
+.question-card.incorrect::before {
+    background-color: #dc3545; /* Kırmızı */
+}
+
+/* Açıklama Alanı */
+.explanation-box {
+    margin-top: 1.5rem;
+    padding: 1rem 1.25rem;
+    background-color: #f1f3f5; /* Biraz daha belirgin gri */
+    border-radius: 0.375rem;
+    border-left: 4px solid #adb5bd; /* Gri sol kenarlık */
+    font-size: 0.9rem;
+    color: #495057;
+    line-height: 1.6;
+}
+.explanation-box strong { /* "Açıklama:" kısmı */
+    font-weight: 600;
+    color: #343a40;
+    display: block; /* Alt satıra geçsin */
+    margin-bottom: 0.3rem;
+}
+.explanation-box .correct-highlight { /* Açıklamadaki doğru cevabı vurgula */
+    font-weight: 600;
+    color: #146c43; /* Koyu Yeşil */
+    background-color: rgba(25, 135, 84, 0.1); /* Çok açık yeşil arka plan */
+    padding: 0.1em 0.3em;
+    border-radius: 0.2rem;
+}
+.explanation-box .your-answer-highlight { /* Kullanıcının cevabını vurgula (yanlışsa) */
+     font-weight: 600;
+     color: #b02a37; /* Koyu Kırmızı */
+     background-color: rgba(220, 53, 69, 0.1); /* Çok açık kırmızı arka plan */
+     padding: 0.1em 0.3em;
+     border-radius: 0.2rem;
+}
+
+
+/* Sonuç Alanı */
+.results-title i {
+    vertical-align: -0.1em; /* İkonu dikey hizala */
+}
+.score-box {
+    background-color: #e9ecef; /* Açık gri */
+    border-color: #ced4da !important; /* Bootstrap alert border override */
+    color: #212529;
+    padding: 1.25rem;
+}
+.score-box strong {
+    font-size: 1.2em; /* Skoru biraz büyüt */
+}
+
+/* Sonuç Butonları */
+#results-area .btn {
+    font-size: 0.95rem;
+    padding: 0.6rem 1.2rem;
+}
+
+
+/* Hata Mesajı */
+#error-message {
+    background-color: #f8d7da;
+    border-color: #f5c2c7;
+    color: #842029;
+    font-weight: 500;
+    padding: 1rem 1.25rem;
+}
+#subtype-error { /* Checkbox hata mesajı */
+    font-weight: 500;
+}
+
+
+/* Footer */
+footer {
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+
+/* Spinner */
+.spinner-border-sm {
+    width: 1rem;
+    height: 1rem;
+    border-width: 0.2em;
+    vertical-align: -0.125em; /* Dikey hizalama */
+}
+
+/* Küçük ekranlar için subtype grid */
+@media (max-width: 576px) {
+    .question-subtypes-grid {
+        grid-template-columns: 1fr; /* Tek sütun */
+    }
+    #quiz-area .question-card {
+         padding: 1.25rem;
+    }
+     #quiz-area .question-header {
+        flex-direction: column; /* Başlığı alt alta getir */
+        align-items: flex-start;
+        gap: 0.25rem; /* Daha az boşluk */
+    }
+     #results-area .d-sm-flex { /* Butonları alt alta getir */
+        flex-direction: column;
+    }
+     .form-card .p-md-5 { /* Kart padding'ini azalt */
+         padding: 1.5rem !important;
+     }
+     .main-title {
+         font-size: 1.8rem; /* Başlığı küçült */
+     }
+}
